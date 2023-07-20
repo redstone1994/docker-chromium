@@ -15,9 +15,11 @@ RUN apk --no-cache --force-overwrite add glibc-2.35-r1.apk && rm -rf glibc-2.35-
 RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-bin-2.35-r1.apk
 RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-i18n-2.35-r1.apk
 RUN apk --no-cache --force-overwrite add glibc-bin-2.35-r1.apk glibc-i18n-2.35-r1.apk
-RUN /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
+RUN /usr/glibc-compat/bin/localedef -i zh_CN -f UTF-8 zh_CN.UTF-8
 RUN rm -rf glibc-bin-2.35-r1.apk glibc-i18n-2.35-r1.apk
 
+ENV LANG=zh_CN.utf8
+RUN apk add --update busybox-extras fontconfig ttf-dejavu
 RUN \
   echo "**** install packages ****" && \
   apk add --no-cache \
