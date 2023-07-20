@@ -8,6 +8,15 @@ LABEL maintainer="thelamer"
 
 # title
 ENV TITLE=Chromium
+RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-2.35-r1.apk
+RUN apk --no-cache --force-overwrite add glibc-2.35-r1.apk && rm -rf glibc-2.35-r1.apk
+
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-bin-2.35-r1.apk
+RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-i18n-2.35-r1.apk
+RUN apk --no-cache --force-overwrite add glibc-bin-2.35-r1.apk glibc-i18n-2.35-r1.apk
+RUN /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
+RUN rm -rf glibc-bin-2.35-r1.apk glibc-i18n-2.35-r1.apk
 
 RUN \
   echo "**** install packages ****" && \
